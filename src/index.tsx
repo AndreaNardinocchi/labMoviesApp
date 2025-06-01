@@ -1,8 +1,8 @@
 import { createRoot } from "react-dom/client";
 // import HomePage from "./pages/homePage";
 import MovieDetailsPage from "./pages/movieDetailsPage";
-import { MovieImage } from "./types/interfaces";
-
+// import { MovieImage } from "./types/interfaces";
+import { MovieImage } from "./stories/movieHeader.stories";
 import sample from "./stories/sampleData";
 
 const images: MovieImage[] = [
@@ -18,6 +18,7 @@ const movies = [sample, sample, sample, sample, sample, sample, sample];
 //   return <HomePage movies={movies} />;
 // };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
   return <MovieDetailsPage movie={sample} images={images} />;
 };

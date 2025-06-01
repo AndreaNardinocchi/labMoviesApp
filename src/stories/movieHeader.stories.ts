@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import MovieHeader from "../components/headerMovie";
 import SampleMovie from "./sampleData";
+import { MovieDetailsProps } from '../types/interfaces';
 
 const meta = {
     title: "Movie Details Page/MovieHeader",

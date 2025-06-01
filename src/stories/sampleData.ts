@@ -78,3 +78,83 @@ export default {
   vote_average: 7,
   vote_count: 9692,
 };
+
+// export default {
+//   adult: false,
+//   backdrop_path: "/7tN5l2a7ipTnqIzU1bRNx8gZrsz.jpg",
+//   belongs_to_collection: {
+//     id: 100010,
+//     name: "Skyline Collection",
+//     poster_path: "/9h2NbF6HU1cz3Lfm2lNvQ3bD5HR.jpg",
+//     backdrop_path: "/nX5XotM9yprCKarRH4fzOq1VM1J.jpg",
+//   },
+//   budget: 8000000,
+//   genres: [
+//     {
+//       id: 28,
+//       name: "Action",
+//     },
+//     {
+//       id: 878,
+//       name: "Science Fiction",
+//     },
+//     {
+//       id: 12,
+//       name: "Adventure",
+//     },
+//   ],
+//   homepage: "https://www.verticalentertainment.com/film/skylines/",
+//   id: 9387250,
+//   imdb_id: "tt9387250",
+//   original_language: "en",
+//   original_title: "Skylines",
+//   overview:
+//     "When a virus threatens to turn alien hybrids against humans, Captain Rose Corley must lead a team of elite soldiers on a mission to the aliens’ home world to save humanity.",
+//   popularity: 25.728,
+//   poster_path: "/2WZvlGzYCCESVEeZONq3pVYtU2d.jpg",
+//   production_companies: [
+//     {
+//       id: 12321,
+//       logo_path: null,
+//       name: "M-Films",
+//       origin_country: "LT",
+//     },
+//     {
+//       id: 248,
+//       logo_path: "/tuomPhY2UtuPTqqFnKMVHvSb724.png",
+//       name: "Film Mode Entertainment",
+//       origin_country: "US",
+//     },
+//     {
+//       id: 48780,
+//       logo_path: null,
+//       name: "Hydraulx",
+//       origin_country: "US",
+//     },
+//   ],
+//   production_countries: [
+//     {
+//       iso_3166_1: "LT",
+//       name: "Lithuania",
+//     },
+//     {
+//       iso_3166_1: "US",
+//       name: "United States of America",
+//     },
+//   ],
+//   release_date: "2020-12-18",
+//   revenue: 170581,
+//   runtime: 113,
+//   spoken_languages: [
+//     {
+//       iso_639_1: "en",
+//       name: "English",
+//     },
+//   ],
+//   status: "Released",
+//   tagline: "To save our world she must invade theirs.",
+//   title: "Skylines",
+//   video: false,
+//   vote_average: 4.9,
+//   vote_count: 362,
+// };

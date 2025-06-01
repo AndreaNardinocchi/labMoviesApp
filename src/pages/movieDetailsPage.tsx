@@ -4,7 +4,8 @@ import MovieDetails from "../components/movieDetails";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { MoviePageProps } from "../types/interfaces";
+// import { MoviePageProps } from "../types/interfaces";
+import { MoviePageProps } from "../stories/movieHeader.stories";
 
 const styles = {
   imageListRoot: {
