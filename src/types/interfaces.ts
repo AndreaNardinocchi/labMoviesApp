@@ -18,7 +18,7 @@ export interface BaseMovieProps {
 }
 
 export interface BaseMovieListProps {
-  movies: BaseMovie[];
+  movies: BaseMovieProps[];
 }
 
 export interface MovieDetailsProps extends BaseMovieProps {
