@@ -5,6 +5,7 @@ import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage"; // NEW
 
+// eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
   return (
     <BrowserRouter>
