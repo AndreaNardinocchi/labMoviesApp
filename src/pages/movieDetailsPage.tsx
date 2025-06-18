@@ -1,30 +1,13 @@
 import React, { useState, useEffect } from "react"; // replace existing react import
 import { useParams } from "react-router-dom";
-import { MovieDetailsProps } from "../types/interfaces"; // replace existing MoviePageProps import
-import MovieHeader from "../components/headerMovie/";
 import MovieDetails from "../components/movieDetails";
-import Grid from "@mui/material/Grid";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import { MovieImage } from "../stories/movieHeader.stories";
-import { getMovie, getMovieImages } from "../api/tmdb-api";
+import { MovieDetailsProps } from "../types/interfaces";
+import { getMovie } from "../api/tmdb-api";
+import PageTemplate from "../components/templateMoviePage";
 
-const styles = {
-  imageListRoot: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-  },
-  gridListTile: {
-    width: "100%",
-    height: "auto",
-  },
-};
-
-const MoviePage: React.FC = () => {
+const MovieDetailsPage: React.FC = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState<MovieDetailsProps>();
-  const [images, setImages] = useState<MovieImage[]>([]);
 
   useEffect(() => {
     getMovie(id ?? "").then((movie) => {
@@ -32,47 +15,31 @@ const MoviePage: React.FC = () => {
     });
   }, [id]);
 
-  useEffect(() => {
-    getMovieImages(id ?? "").then((images) => {
-      setImages(images);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  /**
+   * A common source of errors with React apps
+   * is a component/page renders before the data it needs is retrieved from
+   * the backend API - the initial rendering happens before the useEffect hook completes.
+   * This scenario applies to MovieDetailsPage. The solution is to have a condition
+   * test in the TSX code that checks the availability of the API data.
+   * If available, it displays it, otherwise an appropriate message displays.
+   * In the above code, the ternary operator performs the condition test.
+   *    movie ? display data : display message
+   * */
 
   return (
     <>
       {movie ? (
         <>
-          <MovieHeader {...movie} />
-          <Grid container spacing={5} style={{ padding: "15px" }}>
-            <Grid item xs={3}>
-              <div>
-                <ImageList sx={styles.imageListRoot} cols={1}>
-                  {images.map((image) => (
-                    <ImageListItem
-                      key={image.file_path}
-                      sx={styles.gridListTile}
-                      cols={1}
-                    >
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                        alt={"Image alternative"}
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </div>
-            </Grid>
-            <Grid item xs={9}>
-              <MovieDetails {...movie} />
-            </Grid>
-          </Grid>
+          <PageTemplate movie={movie}>
+            {/* The effect of the code is the children prop of TemplateMoviePage is bound to: */}
+            <MovieDetails {...movie} />
+          </PageTemplate>
         </>
       ) : (
-        <h2>Waiting for API data</h2>
+        <p>Waiting for movie details</p>
       )}
     </>
   );
 };
 
-export default MoviePage;
+export default MovieDetailsPage;
