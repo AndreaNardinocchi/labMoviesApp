@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from "react"; // replace existing react import
+import React from "react"; // replace existing react import
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
-import { MovieDetailsProps } from "../types/interfaces";
-import { getMovie } from "../api/tmdb-api";
 import PageTemplate from "../components/templateMoviePage";
+import useMovie from "../hooks/useMovie";
 
 const MovieDetailsPage: React.FC = () => {
   const { id } = useParams();
-  const [movie, setMovie] = useState<MovieDetailsProps>();
-
-  useEffect(() => {
-    getMovie(id ?? "").then((movie) => {
-      setMovie(movie);
-    });
-  }, [id]);
+  const [movie] = useMovie(id ?? "");
 
   /**
    * A common source of errors with React apps
@@ -31,7 +24,6 @@ const MovieDetailsPage: React.FC = () => {
       {movie ? (
         <>
           <PageTemplate movie={movie}>
-            {/* The effect of the code is the children prop of TemplateMoviePage is bound to: */}
             <MovieDetails {...movie} />
           </PageTemplate>
         </>
@@ -43,3 +35,8 @@ const MovieDetailsPage: React.FC = () => {
 };
 
 export default MovieDetailsPage;
+
+/**
+ * This page component no longer has the useState and useEffect hooks;
+ * they have moved to our custom hook. Check the page still works.
+ */
