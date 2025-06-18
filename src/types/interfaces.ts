@@ -21,6 +21,7 @@ export interface BaseMovieProps {
 export interface BaseMovieListProps {
   movies: BaseMovieProps[];
   selectFavourite: (movieId: number) => void; //add this
+  // '?' will make selectFavourite optional
 }
 
 export interface MovieDetailsProps extends BaseMovieProps {
