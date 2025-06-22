@@ -2,22 +2,30 @@ import React from "react"; // replace existing react import
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
-import useMovie from "../hooks/useMovie";
+// import useMovie from "../hooks/useMovie";   Redundant
+import { getMovie } from "../api/tmdb-api";
+import { useQuery } from "react-query";
+import Spinner from "../components/spinner";
+import { MovieDetailsProps } from "../types/interfaces";
 
 const MovieDetailsPage: React.FC = () => {
   const { id } = useParams();
-  const [movie] = useMovie(id ?? "");
+  const {
+    data: movie,
+    error,
+    isLoading,
+    isError,
+  } = useQuery<MovieDetailsProps, Error>(["movie", id], () =>
+    getMovie(id || "")
+  );
 
-  /**
-   * A common source of errors with React apps
-   * is a component/page renders before the data it needs is retrieved from
-   * the backend API - the initial rendering happens before the useEffect hook completes.
-   * This scenario applies to MovieDetailsPage. The solution is to have a condition
-   * test in the TSX code that checks the availability of the API data.
-   * If available, it displays it, otherwise an appropriate message displays.
-   * In the above code, the ternary operator performs the condition test.
-   *    movie ? display data : display message
-   * */
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{(error as Error).message}</h1>;
+  }
 
   return (
     <>
