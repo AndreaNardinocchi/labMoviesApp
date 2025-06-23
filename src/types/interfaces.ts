@@ -18,10 +18,15 @@ export interface BaseMovieProps {
   genre_ids?: number[];
 }
 
+// export interface BaseMovieListProps {
+//   movies: BaseMovieProps[];
+//   selectFavourite: (movieId: number) => void; //add this
+//   // '?' will make selectFavourite optional
+// }
+
 export interface BaseMovieListProps {
   movies: BaseMovieProps[];
-  selectFavourite: (movieId: number) => void; //add this
-  // '?' will make selectFavourite optional
+  action: (m: BaseMovieProps) => React.ReactNode;
 }
 
 export interface MovieDetailsProps extends BaseMovieProps {
