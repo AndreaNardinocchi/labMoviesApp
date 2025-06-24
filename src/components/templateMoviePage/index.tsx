@@ -5,7 +5,8 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
 import { MovieDetailsProps } from "../../types/interfaces";
-import { MovieImage } from "../../stories/movieHeader.stories";
+// import { MovieImage } from "../../stories/movieHeader.stories";
+import { MovieImage } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
 

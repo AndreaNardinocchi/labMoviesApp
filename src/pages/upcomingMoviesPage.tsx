@@ -1,16 +1,15 @@
 // Import React core functionality
-import React from "react";
+import React, { useContext, useEffect } from "react";
+// Import page template component that wraps movie lists
 import PageTemplate from "../components/templateMovieListPage";
-// Import the function to fetch upcoming movies from the API
+// Function to fetch upcoming movies from the TMDB API
 import { getUpcomingMovies } from "../api/tmdb-api";
-// Import the type definition for a movie object
 import { BaseMovieProps } from "../types/interfaces";
 import Spinner from "../components/spinner";
-// React Query hook for data fetching and caching
 import { useQuery } from "react-query";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import { MoviesContext } from "../contexts/moviesContext";
 
-// Define the UpcomingMoviesPage component using the React.FC (FunctionComponent) type
 const UpcomingMoviesPage: React.FC = () => {
   /**
    * useQuery is a React Query hook used to fetch data and manage its state (loading, error, success).
@@ -24,26 +23,38 @@ const UpcomingMoviesPage: React.FC = () => {
    * - `isError`: a boolean indicating if an error occurred
    * - `error`: the actual error object if isError is true
    */
+
+  // Fetch upcoming movies using React Query
   const {
-    data: movies, // Rename `data` to `movies` for clarity
-    isLoading, // Indicates whether the query is in a loading state
-    isError, // Indicates whether the query encountered an error
-    error, // The error object returned (if any)
+    data: movies, // Rename the returned data as `movies`
+    isLoading, // Indicates whether the query is still loading
+    isError, // Indicates if an error occurred during fetch
+    error, // Contains the error object if isError is true
   } = useQuery<BaseMovieProps[]>(
-    ["upcomingMovies"], // Query key — unique identifier for caching/fetching this query | It's just a unique identifier used by React Query we add ourself
-    getUpcomingMovies // Function to fetch the data
+    ["upcomingMovies"], // Unique query key for caching
+    getUpcomingMovies // Function that fetches the data
   );
 
-  // Show a spinner while loading
+  // Use movie context to access mustWatchList and the function to update it
+  const { addToMustWatchList, mustWatchList } = useContext(MoviesContext);
+
+  // useEffect ensures we log the updated mustWatchList after state changes.
+  // Without it, console.log would show the old state due to React's async updates.
+  useEffect(() => {
+    console.log("Updated mustWatchList:", mustWatchList);
+  }, [mustWatchList]);
+
+  // Show a loading spinner while the movies are being fetched
   if (isLoading) return <Spinner />;
 
-  // Optional: Handle error state
+  // Display an error message if the fetch failed
   if (isError)
     return <p>Error fetching upcoming movies: {(error as Error).message}</p>;
 
+  // Render the page using the template, passing in the list of movies
   return (
     <PageTemplate
-      title="Upcoming Movies"
+      title="Upcoming Movies" // Title displayed on the page
       /**
        * It passes the list of movies to display.
        * If movies is truthy (i.e., data has been loaded and is available),
@@ -51,17 +62,28 @@ const UpcomingMoviesPage: React.FC = () => {
        * (i.e., still undefined or null during loading),
        * then it will pass an empty array [] instead.
        */
-      movies={movies || []}
-      action={() => (
-        <PlaylistAddIcon
-          style={{
-            marginLeft: "4%",
-            marginRight: "4%",
-            verticalAlign: "middle",
-            fontSize: "30px",
-          }}
-        />
-      )}
+      movies={movies || []} // Movies to display; fallback to empty array
+      // Action button to render beside each movie
+      action={(movie: BaseMovieProps) => {
+        // Click handler to add movie to mustWatchList
+        const handleClick = () => {
+          addToMustWatchList(movie); // Update global mustWatchList
+        };
+
+        // Return the PlaylistAdd icon with click behavior
+        return (
+          <PlaylistAddIcon
+            style={{
+              marginLeft: "4%", // Adds left spacing
+              marginRight: "4%", // Adds right spacing
+              verticalAlign: "middle", // Aligns icon with text
+              fontSize: "30px", // Makes icon larger
+              cursor: "pointer", // Shows pointer on hover
+            }}
+            onClick={handleClick} // Calls the handler on click
+          />
+        );
+      }}
     />
   );
 };
