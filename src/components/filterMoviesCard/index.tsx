@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react"; // useState/useEffect redundant
 import { FilterOption, GenreData } from "../../types/interfaces"; //include GenreData interface
-import { SelectChangeEvent } from "@mui/material";
+// import React, { useState, useEffect, ChangeEvent } from "react"; //update existing import
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -11,9 +11,17 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SortIcon from "@mui/icons-material/Sort";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+//import { FilterOption } from "../../types/interfaces";
+import { SelectChangeEvent } from "@mui/material";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
+
+interface FilterMoviesCardProps {
+  onUserInput: (f: FilterOption, s: string) => void; // Add this line
+  titleFilter: string;
+  genreFilter: string;
+}
 
 const styles = {
   root: {
@@ -27,12 +35,6 @@ const styles = {
     backgroundColor: "rgb(255, 255, 255)",
   },
 };
-
-interface FilterMoviesCardProps {
-  onUserInput: (f: FilterOption, s: string) => void; // Add this line
-  titleFilter: string;
-  genreFilter: string;
-}
 
 const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
   titleFilter,
@@ -89,6 +91,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
             variant="filled"
             onChange={handleTextChange}
           />
+
           <FormControl sx={styles.formControl}>
             <InputLabel id="genre-label">Genre</InputLabel>
             <Select

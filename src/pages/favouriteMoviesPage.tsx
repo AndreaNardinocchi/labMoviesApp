@@ -35,6 +35,7 @@ const FavouriteMoviesPage: React.FC = () => {
   ]);
 
   // Create an array of queries and run them in parallel.
+  // If we already have the list of movie IDs and want to fetch each movie individually
   const favouriteMovieQueries = useQueries(
     movieIds.map((movieId) => {
       return {
