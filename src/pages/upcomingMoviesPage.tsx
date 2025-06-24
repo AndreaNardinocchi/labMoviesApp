@@ -1,20 +1,16 @@
-// Import React core functionality and required hooksAdd commentMore actions
-import React, { useEffect, useState, useContext } from "react";
+// Import React core functionality and required hooks
+import React, { useEffect, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 // Import the function to fetch upcoming movies from the API
 import { getUpcomingMovies } from "../api/tmdb-api";
 // Import the type definition for a movie object
 import { BaseMovieProps } from "../types/interfaces";
 import Spinner from "../components/spinner";
-// Import the MoviesContext, which stores the list of favourite movie IDs
-import { MoviesContext } from "../contexts/moviesContext";
-import AddToFavourites from "../components/cardIcons/addToFavourites";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 // Define the UpcomingMoviesPage component
 const UpcomingMoviesPage: React.FC = () => {
-  // Access the list of favourite movie IDs from the contextAdd commentMore actions
-  const { favourites: favouriteIds } = useContext(MoviesContext);
-  // Create local state to store fetched moviesAdd commentMore actions
+  // Create local state to store fetched movies
   const [movies, setMovies] = useState<BaseMovieProps[]>([]);
   // Create local state to keep track of loading status
   const [loading, setLoading] = useState(true);
@@ -27,7 +23,6 @@ const UpcomingMoviesPage: React.FC = () => {
       setMovies(movies); // Save the movies into stateAdd commentMore actions
       setLoading(false); // Turn off the loading state
     };
-
     fetchUpcoming(); // Call the async function
   }, []);
 
@@ -35,16 +30,18 @@ const UpcomingMoviesPage: React.FC = () => {
   if (loading) return <Spinner />;
   return (
     <PageTemplate
-      title="Upcoming Movies" // Page titleAdd commentMore actions
+      title="Upcoming Movies" // Page title
       movies={movies} // Pass fetched movies to the template
-      action={
-        (
-          movie // Define an action (a button/icon) to show on each movie card
-        ) =>
-          !favouriteIds.includes(movie.id) ? ( // If the movie is not already in favourites
-            <AddToFavourites {...movie} /> // Show "Add to Favourites" button
-          ) : null // Otherwise, show nothing
-      }
+      action={() => (
+        <PlaylistAddIcon
+          style={{
+            marginLeft: "4%",
+            marginRight: "4%",
+            verticalAlign: "middle",
+            fontSize: "30px",
+          }}
+        />
+      )}
     />
   );
 };
